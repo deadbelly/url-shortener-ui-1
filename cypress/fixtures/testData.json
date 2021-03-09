@@ -1,7 +1,10 @@
 {
-  "id": 1,
-  "long_url": "https://images.unsplash.com/photo...",
-  "short_url": "http://localhost:3001/useshorturl/2",
-  "title": "Test Url One"
+  "urls":
+    [{
+      "id": 1,
+      "long_url": "https://images.unsplash.com/photo...",
+      "short_url": "http://localhost:3001/useshorturl/2",
+      "title": "Test Url One"
 
+    }]
 }
