@@ -12,7 +12,6 @@ export const postUrl = urlAndTitle => {
     body: JSON.stringify(urlAndTitle)
   })
       .then(response => {
-        console.log(response)
         if (response.ok) {
           return response.json()
         } else {
