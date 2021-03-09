@@ -34,6 +34,14 @@ describe('Using the Form', () => {
     cy.visit('http://localhost:3000/')
   })
 
+  it('Should have an empty string title value by default', () => {
+    cy.get('input[name="title"]').should('have.value','')
+  })
+
+  it('Should have an empty string url value by default', () => {
+    cy.get('input[name="urlToShorten"]').should('have.value','')
+  })
+
   it('Should let the user update the title input', () => {
     cy.get('input[name="title"]').type('Test Url Two')
       .should('have.value','Test Url Two')
