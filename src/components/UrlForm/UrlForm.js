@@ -16,11 +16,16 @@ class UrlForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.submitUrl({
-      long_url: this.state.urlToShorten,
-      title: this.state.title
-    });
-    this.clearInputs();
+    if (this.state.title.length &&
+      this.state.urlToShorten.length) {
+        this.props.submitUrl({
+          long_url: this.state.urlToShorten,
+          title: this.state.title
+        });
+        this.clearInputs();
+      } else {
+        alert('Please fill out both input fields')
+      }
   }
 
   clearInputs = () => {
