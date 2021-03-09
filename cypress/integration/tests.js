@@ -40,8 +40,8 @@ describe('Using the Form', () => {
   })
 
   it('Should let the user update the url input', () => {
-    cy.get('input[name="urlToShorten"]').type('Test Url Two')
-      .should('have.value','Test Url Two')
+    cy.get('input[name="urlToShorten"]').type('https://www.gutenberg.org/files/2701/2701-h/2701-h.htm')
+      .should('have.value','https://www.gutenberg.org/files/2701/2701-h/2701-h.htm')
   })
 
 })
