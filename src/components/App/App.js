@@ -13,6 +13,7 @@ export class App extends Component {
   }
 
   componentDidMount() {
+    getUrls()
   }
 
   render() {
