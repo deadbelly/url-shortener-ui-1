@@ -10,9 +10,9 @@ describe('Visiting the Page', () => {
 
   it('Should have shortened urls', () => {
     cy.get('.url').should('have.length', 1)
-    cy.get('.url').first().get('h3').should('contain', 'Test Url One')
-    cy.get('.url').first().get('a').should('contain', 'http://localhost:3001/useshorturl/2')
-    cy.get('.url').first().get('p').should('contain', 'https://images.unsplash.com/photo...')
+    cy.get('.url').first().should('contain', 'Test Url One')
+    cy.get('.url').first().should('contain', 'http://localhost:3001/useshorturl/2')
+    cy.get('.url').first().should('contain', 'https://images.unsplash.com/photo...')
   })
 
   it('Should have a title input', () => {
@@ -68,9 +68,9 @@ describe('Submiting a URL', () => {
     cy.get('.url').should('have.length', 1)
     cy.get('button').click()
     cy.get('.url').should('have.length', 2)
-    cy.get('.url').first().get('h3').should('contain', 'Test Url Two')
-    cy.get('.url').first().get('a').should('contain', 'This is a sucessful test')
-    cy.get('.url').first().get('p').should('contain', 'not a real url')
+    cy.get('.url').last().should('contain', 'Test Url Two')
+    cy.get('.url').last().should('contain', 'This is a sucessful test')
+    cy.get('.url').last().should('contain', 'not a real url')
   })
 
   it('Should clear inputs after a post', () => {
