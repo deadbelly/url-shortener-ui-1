@@ -11,5 +11,11 @@ export const postUrl = urlAndTitle => {
     },
     body: JSON.stringify(urlAndTitle)
   })
-      .then(response => console.log(response.json()))
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          throw response
+        }
+      })
 }

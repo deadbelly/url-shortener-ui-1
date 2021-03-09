@@ -19,6 +19,8 @@ export class App extends Component {
 
   submitUrl = urlAndTitle => {
     postUrl(urlAndTitle)
+      .then(responseObj => this.setState({urls:
+        [...this.state.urls, responseObj]}))
   }
 
   render() {
