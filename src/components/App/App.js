@@ -21,6 +21,7 @@ export class App extends Component {
     postUrl(urlAndTitle)
       .then(responseObj => this.setState({urls:
         [...this.state.urls, responseObj]}))
+        .catch(err => console.log(err))
   }
 
   render() {

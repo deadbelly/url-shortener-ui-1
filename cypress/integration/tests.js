@@ -1,6 +1,6 @@
 describe('Visiting the Page', () => {
   beforeEach(() => {
-    cy.intercept('http://localhost:3001/api/v1/urls', {fixture: 'testData'})
+    cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {fixture: 'testData'})
     cy.visit('http://localhost:3000/')
   })
 
@@ -30,7 +30,7 @@ describe('Visiting the Page', () => {
 
 describe('Using the Form', () => {
   beforeEach(() => {
-    cy.intercept('http://localhost:3001/api/v1/urls', {fixture: 'testData'})
+    cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {fixture: 'testData'})
     cy.visit('http://localhost:3000/')
   })
 
@@ -43,5 +43,58 @@ describe('Using the Form', () => {
     cy.get('input[name="urlToShorten"]').type('https://www.gutenberg.org/files/2701/2701-h/2701-h.htm')
       .should('have.value','https://www.gutenberg.org/files/2701/2701-h/2701-h.htm')
   })
+})
 
+describe('Submiting a URL', () => {
+  beforeEach(() => {
+    cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {fixture: 'testData'})
+    cy.intercept('POST', 'http://localhost:3001/api/v1/urls',
+      {
+        statusCode: 201,
+        body: {
+          id: 2,
+          long_url: "not a real url",
+          short_url: "This is a sucessful test",
+          title: "Test Url Two"
+        }
+      }
+    )
+    cy.visit('http://localhost:3000/')
+    cy.get('input[name="title"]').type('Test Url Two')
+    cy.get('input[name="urlToShorten"]').type('Imagine this is a url')
+  })
+
+  it('Should add a url card on a successful post', () => {
+    cy.get('.url').should('have.length', 1)
+    cy.get('button').click()
+    cy.get('.url').should('have.length', 2)
+    cy.get('.url').first().get('h3').should('contain', 'Test Url Two')
+    cy.get('.url').first().get('a').should('contain', 'This is a sucessful test')
+    cy.get('.url').first().get('p').should('contain', 'not a real url')
+  })
+
+  it('Should clear inputs after a post', () => {
+    cy.get('input[name="title"]').should('have.value','Test Url Two')
+    cy.get('input[name="urlToShorten"]').should('have.value','Imagine this is a url')
+    cy.get('button').click()
+    cy.get('input[name="title"]').should('have.value','')
+    cy.get('input[name="urlToShorten"]').should('have.value','')
+  })
+})
+
+describe('Handling an Error', () => {
+  it('Should not add a URL on a rejection', () => {
+    cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {fixture: 'testData'})
+    cy.intercept('POST', 'http://localhost:3001/api/v1/urls',
+      {
+        statusCode: 422,
+      }
+    )
+    cy.visit('http://localhost:3000/')
+    cy.get('input[name="title"]').type('Test Url Two')
+    cy.get('input[name="urlToShorten"]').type('Imagine this is a url')
+    cy.get('.url').should('have.length', 1)
+    cy.get('button').click()
+    cy.get('.url').should('have.length', 1)
+  })
 })
